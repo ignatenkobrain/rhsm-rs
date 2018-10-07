@@ -35,10 +35,7 @@ impl EntitlementCertificate {
         let mut data = String::new();
         b64rdr.read_to_string(&mut data).unwrap();
         let zlib_encoded = base64::decode(&data).unwrap();
-        let foo = &*zlib_encoded;
 
-        use flate2::FlateReadExt;
-        foo.zlib_decode();
         let decompressor = flate2::read::ZlibDecoder::new(&*zlib_encoded);
 
         serde_json::from_reader(decompressor).unwrap()
